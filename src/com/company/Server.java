@@ -20,13 +20,17 @@ public class Server {
         if (socket.isConnected()) {
             //imprime na tela o IP do cliente
             System.out.println(socket.getInetAddress());
-            //cria um BufferedReader a partir do InputStream do cliente
 
+            //cria um BufferedReader a partir do InputStream do cliente
             RequisicaoHTTP requisicao = RequisicaoHTTP.lerRequisicao(socket.getInputStream());
 
             //se o caminho foi igual a / entao deve pegar o /index.html
             if (requisicao.getRecurso().equals("/")) {
                 requisicao.setRecurso("/Users/alexandre/Desktop/Java Workspace/Trabalho1/src/com/company/www/home.html");
+            }else{
+                if ((requisicao.getRecurso().equals("/runner.html"))){
+                    requisicao.setRecurso("/Users/alexandre/Desktop/Java Workspace/Trabalho1/src/com/company/www/runner.html");
+                }
             }
             //abre o arquivo pelo caminho
             File arquivo = new File(requisicao.getRecurso());
