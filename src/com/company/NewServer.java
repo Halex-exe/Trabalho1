@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 /**
  *
- * @author gabriel
+ * @author Alexandre MK
  */
 public class NewServer {
 
@@ -31,7 +31,7 @@ public class NewServer {
 
         contentType.put("gif", "image/gif");
         contentType.put("html", "text/html");
-        contentType.put("htm", "text/html");
+        contentType.put("tml", "text/html");
         contentType.put("jpg", "image/jpeg");
         contentType.put("pdf", "application/pdf");
         contentType.put("png", "image/png");
@@ -83,7 +83,6 @@ public class NewServer {
                     htmlErro404.append("<body bgcolor=blue>");
                     htmlErro404.append("<h1>");
                     htmlErro404.append("Recurso nao encontrado!");
-
                     htmlErro404.append("</h1>");
                     htmlErro404.append("<br>");
                     htmlErro404.append(partesGet[1]);

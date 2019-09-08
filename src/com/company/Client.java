@@ -22,7 +22,7 @@ public class Client {
         String requisicao = ""
                 + "GET / HTTP/1.1\r\n"
                 + "Host: www.google.com.br\r\n"
-                + "\r\n";
+                + "\r\n";                       //linha em branco
         //OutputStream para enviar a requisição
         OutputStream envioServ = socket.getOutputStream();
         //temos que mandar a requisição no formato de vetor de bytes

@@ -13,6 +13,7 @@ public class Server {
         /* cria um socket "servidor" associado a porta 8000
          já aguardando conexões
          */
+        String teste = "Alexandre";
         ServerSocket servidor = new ServerSocket(8000);
         //aceita a primeita conexao que vier
         Socket socket = servidor.accept();
