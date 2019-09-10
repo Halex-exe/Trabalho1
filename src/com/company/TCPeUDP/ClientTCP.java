@@ -7,7 +7,7 @@ public class ClientTCP {
     public static void main(String[] args) throws IOException {
 
         try {
-            Socket s = new Socket("localhost", 8422);
+            Socket s = new Socket("localhost", 8422); //TCP
 
             OutputStream outS = s.getOutputStream();
             InputStream inS = s.getInputStream();

@@ -9,22 +9,24 @@ public class ServerTCP {
 
         try{
             ServerSocket ss = new ServerSocket(8422);
-            Socket s = ss.accept();
 
-            OutputStream outS = s.getOutputStream();
-            InputStream inS = s.getInputStream();
+            while (true) {
+                Socket s = ss.accept();                         //Servidor porque ele aguarda uma conexão.
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(inS));
-            PrintWriter out = new PrintWriter(outS);
+                OutputStream outS = s.getOutputStream(); //Fluxos atrelados ao canal do socket.
+                InputStream inS = s.getInputStream();
 
-            String conteudo = in.readLine();
-            conteudo = "Resposta: " + conteudo + " tudo certo!";
-            out.println(conteudo);
-            out.flush();
+                BufferedReader in = new BufferedReader(new InputStreamReader(inS));
+                PrintWriter out = new PrintWriter(outS);
 
-            out.close();
-            in.close();
+                String conteudo = in.readLine(); //fica bloqueado esperando uma linha de texto.
+                conteudo = "Resposta: " + conteudo + " tudo certo!";
+                out.println(conteudo);
+                out.flush();
 
+                out.close();
+                in.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
