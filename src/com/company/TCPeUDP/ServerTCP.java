@@ -1,34 +1,38 @@
 package com.company.TCPeUDP;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerTCP {
-    public static void main(String[] args){
-
-        try{
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        try {
             ServerSocket ss = new ServerSocket(8422);
+            Socket s;
+            OutputStream outS;
+            InputStream inS;
+            BufferedReader in;
+            PrintWriter out;
+            String conteudo;
+            AtendenteTCP a;
 
             while (true) {
-                Socket s = ss.accept();                         //Servidor porque ele aguarda uma conexão.
-
-                OutputStream outS = s.getOutputStream(); //Fluxos atrelados ao canal do socket.
-                InputStream inS = s.getInputStream();
-
-                BufferedReader in = new BufferedReader(new InputStreamReader(inS));
-                PrintWriter out = new PrintWriter(outS);
-
-                String conteudo = in.readLine(); //fica bloqueado esperando uma linha de texto.
-                conteudo = "Resposta: " + conteudo + " tudo certo!";
-                out.println(conteudo);
-                out.flush();
-
-                out.close();
-                in.close();
+                s = ss.accept();
+                a = new AtendenteTCP(s);
+                a.start();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }
+

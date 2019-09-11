@@ -1,35 +1,78 @@
 package com.company.TCPeUDP;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 
-public class ClientTCP {
-    public static void main(String[] args) throws IOException {
+public class ClientTCP extends Thread{
+    Socket s;
 
+    OutputStream outS;
+    InputStream inS;
+
+    BufferedReader in;
+    PrintWriter out;
+    BufferedReader inTeclado;
+
+    public void conectar() {
         try {
-            Socket s = new Socket("localhost", 8422); //TCP
+            s = new Socket("localhost", 8422);
 
-            OutputStream outS = s.getOutputStream();
-            InputStream inS = s.getInputStream();
+            outS = s.getOutputStream();
+            inS = s.getInputStream();
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(inS));
-            PrintWriter out = new PrintWriter(outS);
-
-            BufferedReader inTeclado = new BufferedReader(new InputStreamReader(System.in));
-
-            System.out.print("Digite uma mensagem:");
-            String mensagem = inTeclado.readLine();
-            out.println(mensagem);
-            out.flush();
-
-            mensagem = in.readLine();
-            System.out.println(mensagem);
-
-            in.close();
-            out.close();
-
+            in = new BufferedReader(new InputStreamReader(inS));
+            out = new PrintWriter(outS);
+            inTeclado = new BufferedReader(new InputStreamReader(System.in));
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
+
+    public void enviar(String msg) {
+        out.println(msg);
+        out.flush();
+    }
+
+    public void aguardar() {
+        try {
+            while (true) {
+                System.out.println(in.readLine());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void run() {
+        aguardar();
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        ClientTCP c = new ClientTCP();
+        c.conectar();
+        c.start();
+        String txt;
+
+        try {
+            while (true) {
+                txt = c.inTeclado.readLine();
+                c.enviar(txt);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
